@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    /* Light theme - Blue color scheme */
+    --background: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 210 40% 98%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 210 40% 98%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 199 89% 48%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 199 89% 48%;
+    --radius: 0.5rem;
+
+    /* Chart colors - Blue theme */
+    --chart-1: 199 89% 48%;
+    --chart-2: 210 98% 78%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    /* Sidebar colors - Blue theme */
+    --sidebar-background: 210 40% 98%;
+    --sidebar-foreground: 222.2 84% 4.9%;
+    --sidebar-primary: 199 89% 48%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 222.2 84% 4.9%;
+    --sidebar-border: 214.3 31.8% 91.4%;
+    --sidebar-ring: 199 89% 48%;
+  }
+
+  .dark {
+    /* Dark theme - Blue color scheme */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 199 89% 48%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 199 89% 48%;
+
+    /* Chart colors - Dark blue theme */
+    --chart-1: 199 89% 48%;
+    --chart-2: 210 98% 78%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    /* Sidebar colors - Dark blue theme */
+    --sidebar-background: 222.2 84% 4.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 199 89% 48%;
+    --sidebar-primary-foreground: 222.2 84% 4.9%;
+    --sidebar-accent: 217.2 32.6% 17.5%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-ring: 199 89% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* Custom blue theme enhancements */
+.bg-gradient-to-br {
+  transition: background 0.3s ease;
+}
+
+/* Light mode gradient */
+:root .bg-gradient-to-br.from-sky-50.to-blue-100 {
+  background: linear-gradient(to bottom right, hsl(204 100% 97%), hsl(214 100% 92%));
+}
+
+/* Dark mode gradient */
+.dark .bg-gradient-to-br.from-sky-50.to-blue-100 {
+  background: linear-gradient(to bottom right, hsl(222.2 84% 4.9%), hsl(217.2 32.6% 17.5%));
+}
+
+/* Ensure proper text colors in dark mode */
+.dark .text-gray-900 {
+  @apply text-foreground;
+}
+
+.dark .text-gray-600 {
+  @apply text-muted-foreground;
+}
+
+.dark .text-gray-500 {
+  @apply text-muted-foreground;
+}
+
+.dark .text-gray-700 {
+  @apply text-foreground;
+}
+
+/* Button hover states for blue theme */
+.bg-green-600:hover {
+  background-color: hsl(142 76% 36%);
+}
+
+.dark .bg-green-600:hover {
+  background-color: hsl(142 76% 36%);
+}
+
+.text-green-600.border-green-600:hover {
+  background-color: hsl(142 50% 95%);
+}
+
+.dark .text-green-600.border-green-600:hover {
+  background-color: hsl(142 76% 6%);
+}
+
+.text-red-600.border-red-600:hover {
+  background-color: hsl(0 50% 95%);
+}
+
+.dark .text-red-600.border-red-600:hover {
+  background-color: hsl(0 76% 6%);
+}
