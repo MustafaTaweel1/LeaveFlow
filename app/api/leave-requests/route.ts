@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { connectDB } from "@/lib/mongodb";
 import LeaveRequest from "@/models/LeaveRequest";
 import User from "@/models/User";
+import Notification from "@/models/Notification";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 export const dynamic = "force-dynamic";
@@ -46,6 +47,11 @@ export async function POST(request: NextRequest) {
     const decoded = jwt.verify(token, JWT_SECRET) as any;
 
     await connectDB();
+
+    const currentUser = await User.findById(decoded.userId);
+    if (!currentUser) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    }
 
     const { type, startDate, endDate, reason } = await request.json();
 
@@ -113,18 +119,37 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Set initial status based on user role
+    const initialStatus =
+      currentUser.role === "manager" ? "pending_hr" : "pending_manager";
+
     const leaveRequest = new LeaveRequest({
       employeeId: decoded.userId,
       type,
       startDate: start,
       endDate: end,
       reason,
-      status: "pending_manager",
-      daysRequested, // Store the number of days requested
+      status: initialStatus,
+      daysRequested,
     });
 
     await leaveRequest.save();
     await leaveRequest.populate("employeeId", "name email");
+
+    // If requester is a manager, notify HR directly
+    if (currentUser.role === "manager") {
+      // Notify HR team
+      const hrUsers = await User.find({ role: { $in: ["hr", "admin"] } });
+      for (const hrUser of hrUsers) {
+        await new Notification({
+          userId: hrUser._id,
+          type: "leave_hr_pending",
+          title: "Manager Leave Request",
+          message: `Manager ${currentUser.name} has submitted a leave request for HR approval.`,
+          data: { leaveRequestId: leaveRequest._id },
+        }).save();
+      }
+    }
 
     return NextResponse.json(leaveRequest, { status: 201 });
   } catch (error) {

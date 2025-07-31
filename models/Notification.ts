@@ -15,8 +15,8 @@ const notificationSchema = new mongoose.Schema(
         "leave_rejected",
         "leave_updated",
         "leave_cancelled",
-        "leave_pending_hr", // New type for manager leaves pending HR approval
-        "leave_hr_approved", // New type for HR approval of manager leaves
+        "leave_hr_pending", // For manager leave requests pending HR approval
+        "leave_hr_approved", // For HR approved manager leaves
       ],
       required: true,
     },
